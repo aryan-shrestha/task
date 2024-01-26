@@ -171,7 +171,7 @@ def get_stock_detail(request):
         company_detail.close_price = data_dict['close_price*']
         company_detail.total_paid_up_value = data_dict['total_paid_up_value']
         company_detail.market_capitalization = data_dict['market_capitalization']
-        company_detail.table_listed_shares = data_dict['total_listed_shares'
+        company_detail.table_listed_shares = data_dict['total_listed_shares']
         company_detail.save()
     
     return render(request, 'top_gainers/detail.html', context={'company': company_detail})
