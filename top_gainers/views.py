@@ -128,7 +128,7 @@ def get_stock_detail(request):
         th_text = row.find('th').get_text(strip=True).lower().replace(" ", "_")
         td_text = row.find('td').get_text(strip=True)
         data_dict[th_text] = td_text
-    
+    print(data_dict)
     # saving to database or updating fields if already exists
     try:
         company_detail = CompanyDetail.objects.get(name__iexact=data_dict['company_name'])
@@ -151,6 +151,7 @@ def get_stock_detail(request):
         company_detail.close_price = data_dict['close_price*']
         company_detail.total_paid_up_value = data_dict['total_paid_up_value']
         company_detail.market_capitalization = data_dict['market_capitalization']
+        company_detail.table_listed_shares = data_dict['total_listed_shares']
         company_detail.save()
     else:
         company_detail.name = data_dict['company_name']
@@ -170,6 +171,7 @@ def get_stock_detail(request):
         company_detail.close_price = data_dict['close_price*']
         company_detail.total_paid_up_value = data_dict['total_paid_up_value']
         company_detail.market_capitalization = data_dict['market_capitalization']
+        company_detail.table_listed_shares = data_dict['total_listed_shares'
         company_detail.save()
     
     return render(request, 'top_gainers/detail.html', context={'company': company_detail})
