@@ -1,0 +1,90 @@
+{% extends 'includes/base.html' %}
+
+{% block content %}
+
+<div class="container mx-auto p-4 space-y-8">
+    <div class="company_details space-y-2">
+        <a href="{% url 'detail' %}" class="font-medium hover:underline" id="refresh-data-btn">Refresh data</a>
+        <h1 class="text-2xl font-semibold">{{ company.name }}</h1>
+        <p class="">Email address: {{ company.email }}</p>
+        <p>Sector: {{ company.sector }}</p>
+        <p>Permitted to Trade: {{ company.permitted_to_trade }}</p>
+        <p>Status: {{ company.status }}</p>
+    </div>
+
+    <div class="w-full">
+        <table class="w-full text-left">
+            <tbody>
+                <tr class="border-[1px] border-neutral-400">
+                    <th class="py-2 px-2">Instrument Type </th>
+                    <td class="py-2 px-2">{{ company.instrument_type }}</td>
+                </tr>
+                <tr class="border-[1px] border-neutral-400">
+                    <th class="py-2 px-2">Listing Date </th>
+                    <td class="py-2 px-2">{{ company.listing_date }}</td>
+                </tr>
+                <tr class="border-[1px] border-neutral-400">
+                    <th class="py-2 px-2">Last Traded Price</th>
+                    <td class="py-2 px-2">{{ company.last_traded_price }}</td>
+                </tr>
+                <tr class="border-[1px] border-neutral-400">
+                    <th class="py-2 px-2">Total Traded Quantity </th>
+                    <td class="py-2 px-2">{{ company.total_traded_quantity }}</td>
+                </tr>
+                <tr class="border-[1px] border-neutral-400">
+                    <th class="py-2 px-2">Total trades </th>
+                    <td class="py-2 px-2">{{ company.total_trades}}</td>
+                </tr>
+                <tr class="border-[1px] border-neutral-400">
+                    <th class="py-2 px-2">Previous Day Close Price </th>
+                    <td class="py-2 px-2">{{ company.previous_day_close_price }}</td>
+                </tr>
+                <tr class="border-[1px] border-neutral-400">
+                    <th class="py-2 px-2">High Price / Low Price </th>
+                    <td class="py-2 px-2">{{ company.high_low_price }}</td>
+                </tr>
+                <tr class="border-[1px] border-neutral-400">
+                    <th class="py-2 px-2">52 Week High / 52 Week Low </th>
+                    <td class="py-2 px-2">{{ company.week_high_low }}</td>
+                </tr>
+                <tr class="border-[1px] border-neutral-400">
+                    <th class="py-2 px-2">Open Price </th>
+                    <td class="py-2 px-2">{{ company.open_price }}</td>
+                </tr>
+                <tr class="border-[1px] border-neutral-400">
+                    <th class="py-2 px-2">Close Price </th>
+                    <td class="py-2 px-2">{{ company.close_price }}</td>
+                </tr>
+                <tr class="border-[1px] border-neutral-400">
+                    <th class="py-2 px-2">Total Listed Shares </th>
+                    <td class="py-2 px-2">{{ company.table_listed_shares }}</td>
+                </tr>
+                <tr class="border-[1px] border-neutral-400">
+                    <th class="py-2 px-2">Total Paid up Value </th>
+                    <td class="py-2 px-2">{{ company.total_paid_up_value }}</td>
+                </tr>
+                <tr class="border-[1px] border-neutral-400">
+                    <th class="py-2 px-2">Market Capitalization </th>
+                    <td class="py-2 px-2">{{ company.market_capitalization }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+
+<script>
+    let refreshDataBtn = document.getElementById("refresh-data-btn");
+    console.log(refreshDataBtn.innerText);
+    refreshDataBtn.addEventListener("click", (e) => {
+        console.log("clicked");
+        refreshDataBtn.innerText = "Refreshing data...."
+    })
+
+
+</script>
+
+{% endblock %}

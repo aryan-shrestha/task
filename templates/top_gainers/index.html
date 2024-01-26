@@ -1,0 +1,114 @@
+{% extends 'includes/base.html' %}
+
+{% block content %}
+
+<div class="container p-4 mx-auto space-y-4">
+    <h1 class="text-2xl font-semibold">Top gainers</h1>
+    <div class="flex gap-8">
+        <p class="text-neutral-500">
+            Last updated:
+            {% if last_updated_date %}
+            {{ last_updated_date }}
+            {% else %}
+            Null
+            {% endif %}
+        </p>
+        <a href="{% url 'refresh' %}" class="font-medium text-green-700 hover:underline" id="refresh-data-btn">Refresh
+            data</a>
+    </div>
+
+    <div class="w-full">
+        {% if companies %}
+        <table class="w-full text-left">
+            <thead>
+                <tr class="border-[1px] border-neutral-400">
+                    <th class="py-4 px-2">Symbol</th>
+                    <th class="py-4 px-2">LTP</th>
+                    <th class="py-4 px-2">PT change</th>
+                    <th class="py-4 px-2">Percentage Change</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for company in companies %}
+                <tr class="border-[1px] border-neutral-400">
+                    <td class="py-2 px-2">{{company.symbol}}</td>
+                    <td class="py-2 px-2">{{company.LTP}}</td>
+                    <td class="py-2 px-2">{{company.pt_change}}</td>
+                    <td class="py-2 px-2">{{company.percentage_change}}</td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+        <!-- component -->
+        <div class="flex items-center justify-center py-10 lg:px-0 sm:px-6 px-4">
+            <!--- more free and premium Tailwind CSS components at https://tailwinduikit.com/ --->
+
+            <div class="lg:w-3/5 w-full  flex items-center justify-between border-t border-gray-200">
+                {% if companies.has_previous %}
+                <div class="flex items-center pt-3 text-gray-600 hover:text-indigo-700 cursor-pointer">
+                    <svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1.1665 4H12.8332" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M1.1665 4L4.49984 7.33333" stroke="currentColor" stroke-width="1.25"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M1.1665 4.00002L4.49984 0.666687" stroke="currentColor" stroke-width="1.25"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <a href="?page={{ companies.previous_page_number }}"
+                        class="text-sm ml-3 font-medium leading-none ">Previous</a>
+                </div>
+                {% endif %}
+                <div class="sm:flex hidden">
+                    {% for i in companies.paginator.page_range %}
+                    {% if companies.number == i %}
+                    <span
+                        class="text-sm font-medium leading-none cursor-pointer text-indigo-700 border-t border-indigo-400 pt-3 mr-4 px-2">
+                        {{ i }}
+                    </span>
+                    {% else %}
+                    <a href="?page={{ i }}"
+                        class="text-sm font-medium leading-none cursor-pointer text-gray-600 hover:text-indigo-700 border-t border-transparent hover:border-indigo-400 pt-3 mr-4 px-2">
+                        {{ i }}</a>
+                    {% endif %}
+                    {% endfor %}
+
+                </div>
+                {% if companies.has_next %}
+                <div class="flex items-center pt-3 text-gray-600 hover:text-indigo-700 cursor-pointer">
+                    <a href="?page={{ companies.next_page_number }}"
+                        class="text-sm font-medium leading-none mr-3">Next</a>
+                    <svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1.1665 4H12.8332" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M9.5 7.33333L12.8333 4" stroke="currentColor" stroke-width="1.25"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M9.5 0.666687L12.8333 4.00002" stroke="currentColor" stroke-width="1.25"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% else %}
+        <p class="text-center">No data found</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+
+<script>
+    let refreshDataBtn = document.getElementById("refresh-data-btn");
+    console.log(refreshDataBtn.innerText);
+    refreshDataBtn.addEventListener("click", (e) => {
+        console.log("clicked");
+        refreshDataBtn.innerText = "refreshing data...."
+    })
+
+
+</script>
+
+{% endblock %}
